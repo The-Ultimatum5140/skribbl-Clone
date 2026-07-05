@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 import socket from "@/services/socket";
 import { SOCKET_EVENTS } from "@/constants/socketEvents";
 import storage from "@/utils/storage";
 import { STORAGE_KEYS } from "@/constants/storageKeys";
+
 import LobbyHeader from "./components/LobbyHeader";
 import LobbyInfo from "./components/LobbyInfo";
 import PlayerList from "./components/PlayerList";
 import LobbySettings from "./components/LobbySettings";
 import HostControls from "./components/HostControls";
-import { useNavigate } from "react-router-dom";
 
 const Lobby = () => {
   const navigate = useNavigate();
@@ -25,17 +26,14 @@ const Lobby = () => {
     }
 
     const handleRoomState = (roomData) => {
-      console.log("ROOM_STATE:", roomData);
       setRoom(roomData);
     };
-    const handleGameStarted = ({ roomId }) => {
-      console.log("GAME_STARTED", roomId);
 
+    const handleGameStarted = ({ roomId }) => {
       navigate(`/game/${roomId}`);
     };
 
     socket.on(SOCKET_EVENTS.GAME_STARTED, handleGameStarted);
-
     socket.on(SOCKET_EVENTS.ROOM_STATE, handleRoomState);
 
     socket.emit(SOCKET_EVENTS.GET_ROOM_STATE, {
@@ -43,26 +41,27 @@ const Lobby = () => {
     });
 
     return () => {
-      socket.off(SOCKET_EVENTS.ROOM_STATE, handleRoomState);
       socket.off(SOCKET_EVENTS.GAME_STARTED, handleGameStarted);
+      socket.off(SOCKET_EVENTS.ROOM_STATE, handleRoomState);
     };
-  }, [roomId]);
+  }, [roomId, navigate]);
 
   if (!room) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[var(--color-background)]">
-        <h2 className="text-2xl font-semibold text-white">Loading Lobby...</h2>
+      <div className="flex min-h-screen items-center justify-center bg-[var(--color-background)] px-4">
+        <h2 className="text-center text-xl font-semibold text-white sm:text-2xl">
+          Loading Lobby...
+        </h2>
       </div>
     );
   }
 
   const playerId = storage.get(STORAGE_KEYS.PLAYER_ID);
-
   const isHost = room.hostId === playerId;
 
   return (
-    <div className="min-h-screen bg-[var(--color-background)] flex items-center justify-center p-6">
-      <div className="w-full max-w-2xl rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-8 space-y-6">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--color-background)] px-4 py-6 sm:px-6">
+      <div className="w-full max-w-2xl rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6">
         <LobbyHeader roomId={room.roomId || roomId} />
 
         <LobbyInfo

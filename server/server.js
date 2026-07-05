@@ -7,7 +7,6 @@ import env from "./src/config/env.js";
 
 const httpServer = http.createServer(app);
 
-
 const io = new Server(httpServer, {
   cors: {
     origin: env.CLIENT_URL,
@@ -22,10 +21,5 @@ registerSocket(io);
 // server start kiya
 
 httpServer.listen(env.PORT, () => {
-  console.log(`
-====================================
-🚀 Server running successfully
-🌐 http://localhost:${env.PORT}
-====================================
-  `);
+  console.log(`🚀 Server running on PORT ${env.PORT}`);
 });

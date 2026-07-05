@@ -20,9 +20,10 @@ const SOCKET_EVENTS = Object.freeze({
   START_GAME: "start_game",
   GAME_STARTED: "game_started",
   GAME_OVER: "game_over",
+  GAME_ERROR: "game:error",
 
-  WORD_OPTIONS: "word_options", 
-  SELECT_WORD: "select_word", 
+  WORD_OPTIONS: "word_options",
+  SELECT_WORD: "select_word",
 
   GET_GAME_DATA: "get_game_data", // existing project
   GAME_DATA: "game_data",

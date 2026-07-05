@@ -32,7 +32,7 @@ export const SOCKET_EVENTS = Object.freeze({
   CORRECT_GUESS: "correct_guess",
   WORD_OPTIONS: "word_options",
   SELECT_WORD: "select_word",
-
+  GAME_ERROR: "game:error",
   TIMER_UPDATE: "timer_update",
 
   NEXT_ROUND: "next_round",

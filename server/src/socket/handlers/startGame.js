@@ -19,9 +19,10 @@ const startGame = (io, socket) => {
       return;
     }
 
-    // Minimum players
     if (room.players.length < 2) {
-      console.log("Not enough players to start the game");
+      socket.emit(SOCKET_EVENTS.GAME_ERROR, {
+        message: "At least 2 players are required to start the game.",
+      });
       return;
     }
 

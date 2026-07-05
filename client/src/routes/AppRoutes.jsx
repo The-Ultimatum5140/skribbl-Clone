@@ -5,7 +5,7 @@ import MainLayout from "@/layouts/MainLayout";
 import Home from "@/pages/Home/Home";
 import Lobby from "@/pages/Lobby/Lobby";
 import Game from "@/pages/Game/Game";
-import NotFound from "@/pages/NotFound/NotFound";
+import Notfound from "@/pages/Notfound/Notfound";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <NotFound />,
+        element: <Notfound />,
       },
     ],
   },
